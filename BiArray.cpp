@@ -89,17 +89,11 @@ bool BiArray::set(int i, int v) {
 }
 
 int BiArray::operator[](int i) const {
-	// IMPLEMENT ME
-	// below are just stub code
-	int removeMe = 0;
-	return removeMe;
+	return p[i];
 }
 
 int& BiArray::operator[](int i) {
-	// IMPLEMENT ME
-	// below are just stub code
-	int removeMe = 0;
-	return removeMe;
+	return *p[i];
 }
 
 void BiArray::push_back(int v) {
