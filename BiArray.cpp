@@ -4,17 +4,17 @@
 // default constructor
 BiArray::BiArray() {
  size = 0;
- INITIALCAP = 10;//TODO FIRST element should be inserted into the middle
-
+ start = (LO_THRESHOLD*size);//TODO FIRST element should be inserted into the middle
+capacity = INITIALCAP;
 }
 
 // value constructor
 BiArray::BiArray(int arr[], int size)  {
 	if ((LO_THRESHOLD * size) > INITIALCAP) {
-		INITIALCAP = new int((LO_THRESHOLD*size));//3*size
+		capacity = (LO_THRESHOLD*size);//3*size
 	}
-	p = new int[INITIALCAP];//initial capacity
-	int start = (INITIALCAP - size)/2;//to get it to be inserted into center
+	p = new int[capacity];//initial capacity
+	start = ((capacity - size)/2);//to get it to be inserted into center
 	for (int i = start; i < size; i++) {
 		p[i] = arr[i];
 	}
@@ -27,12 +27,14 @@ BiArray::~BiArray() {
 	delete LO_THRESHOLD;
 	delete INITIALCAP;
 	delete size;
+	delete capacity;
+	delete start;
 }
 
 // copy constructor
 BiArray::BiArray(const BiArray& other) :
 	size(other.size), p(new int[other.size]){
-	int start = (INITIALCAP - size)/2;
+	start = (capacity - size)/2;
 	for (int i = start; i , size; i++) {
 		p[i] = other[i];
 	}
@@ -97,7 +99,7 @@ int& BiArray::operator[](int i) {
 }
 
 void BiArray::push_back(int v) {
-	// IMPLEMENT ME
+
 }
 
 bool BiArray::pop_back() {
@@ -119,17 +121,11 @@ bool BiArray::pop_front() {
 }
 
 int BiArray::getSize() const {
-	// IMPLEMENT ME
-	// below are just stub code
-	int removeMe = 0;
-	return removeMe;
+	return size;
 }
 
 int BiArray::getCapacity() const {
-	// IMPLEMENT ME
-	// below are just stub code
-	int removeMe = 0;
-	return removeMe;
+	return capacity;
 }
 
 string BiArray::print() const {
