@@ -1,10 +1,6 @@
 #include "BiArray.h"
 
-int size = new int();//TODO probably shouldn't use 'new' on global constants - so there is no memory leak in main.cpp
-const int INITIALCAP;//Initail Capacity - not the same as initiali size!
-const int LO_THRESHOLD = 3;
-const int HIGH_THRESHOLD = 5;
-int * p = nullptr;
+
 // default constructor
 BiArray::BiArray() {
  size = 0;
@@ -19,28 +15,33 @@ BiArray::BiArray(int arr[], int size)  {
 	}
 	p = new int[INITIALCAP];//initial capacity
 	int start = (INITIALCAP - size)/2;//to get it to be inserted into center
-		for (int i = start; i < size; i++) {
-			p[start] = arr[i];
-		}
+	for (int i = start; i < size; i++) {
+		p[i] = arr[i];
+	}
 }
 
 // destructor
 BiArray::~BiArray() {
 	delete p;
-	delete HIGH_THRESHOLD;
+	delete HI_THRESHOLD;
 	delete LO_THRESHOLD;
 	delete INITIALCAP;
 	delete size;
 }
 
 // copy constructor
-BiArray::BiArray(const BiArray& other) {
-	// IMPLEMENT ME
+BiArray::BiArray(const BiArray& other) :
+	size(other.size), p(new int[other.size]){
+	int start = (INITIALCAP - size)/2;
+	for (int i = start; i , size; i++) {
+		p[i] = other[i];
+	}
 }
 
 // move constructor
-BiArray::BiArray(BiArray&& other) {
-	// IMPLEMENT ME
+BiArray::BiArray(BiArray&& other) : size(other.size), p(other.p) {
+	other.p = nullptr;
+	other.size = 0;
 }
 
 // copy assignment

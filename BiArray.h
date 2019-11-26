@@ -98,6 +98,8 @@ public:
 
 private:
 	// TODO: add your private member data (and possibly functions)
+	int size = new int();//TODO probably shouldn't use 'new' on global constants - so there is no memory leak in main.cpp
+	int * p = nullptr;
 
 };
 
