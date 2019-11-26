@@ -98,7 +98,22 @@ int& BiArray::operator[](int i) {
 	return *p[i];
 }
 
+
 void BiArray::push_back(int v) {
+	//new array
+	//do temp swap for new rray and old array values
+	//i.e.insert old values into new array
+	//insert new var v into array at tail
+	if (size == capacity ) {//If no space
+		int *temp = p;
+		p = new int[LO_THRESHOLD*size]; //increase size
+		delete [] temp;//deleting manually just in case
+	}
+	 int* temp= new int[capacity];
+	 size+=1;//increase BiArray size
+	 start = ((capacity - size)/2);
+	 int tail = start + size;
+	 p[tail] = v;
 
 }
 
