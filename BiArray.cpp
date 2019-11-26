@@ -22,7 +22,7 @@ BiArray::BiArray(int arr[], int size)  {
 
 // destructor
 BiArray::~BiArray() {
-	delete p;
+	delete [] p;
 	delete HI_THRESHOLD;
 	delete LO_THRESHOLD;
 	delete INITIALCAP;
@@ -77,17 +77,15 @@ BiArray& BiArray::operator=(BiArray&& other) {
 }
 
 bool BiArray::get(int i, int& v) const {
-	// IMPLEMENT ME
-	// below are just stub code
-	bool removeMe = false;
-	return removeMe;
+	if (i >= size) {return false;}
+	v = p[i];
+	return true;
 }
 
 bool BiArray::set(int i, int v) {
-	// IMPLEMENT ME
-	// below are just stub code
-	bool removeMe = false;
-	return removeMe;
+	if (i >= size) {return false;}
+	p[i] = v;
+	return true;
 }
 
 int BiArray::operator[](int i) const {
