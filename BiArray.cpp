@@ -47,9 +47,19 @@ BiArray::BiArray(BiArray&& other) : size(other.size), p(other.p) {
 // copy assignment
 BiArray& BiArray::operator=(const BiArray& other) {
 	// IMPLEMENT ME
-	// below are just stub code
-	BiArray& removeMe = *this;
-	return removeMe;
+	if (this != &other) {
+		if (size != other.size) {
+			delete [] p;
+			p = new int[other.size];
+			size = other.size;
+		}
+	}
+	int start = (INITIALCAP - size)/2;
+	for (int i = start; i < size ; i++) {
+		p[i] = other.p[i];
+	}
+
+	return *this;
 }
 
 // move assignment
