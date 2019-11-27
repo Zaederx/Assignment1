@@ -3,6 +3,7 @@
 
 // default constructor
 BiArray::BiArray() {
+ p = new int [INITIALCAP];
  size = 0;
  start = 2;//TODO FIRST element should be inserted into the middle
  end = 2;// end = start + size
@@ -11,6 +12,10 @@ capacity = INITIALCAP;// 5
 
 // value constructor
 BiArray::BiArray(int arr[], int size)  {
+	this->size = new int(size);
+	 start = new int(2);//TODO FIRST element should be inserted into the middle
+	 end = new int(2);// end = start + size
+	capacity = new int(INITIALCAP);// 5
 	if ((LO_THRESHOLD * size) > INITIALCAP) {
 		capacity = (LO_THRESHOLD*size);//3*size
 	}
@@ -35,7 +40,8 @@ BiArray::~BiArray() {
 
 // copy constructor
 BiArray::BiArray(const BiArray& other) :
-	size(other.size), p(new int[other.size]){
+	size(other.size), p(new int[other.capacity]), //new memory
+	start(other.start), end(other.end), capacity(other.capacity){
 	start = (capacity - size)/2;
 	for (int i = start; i , size; i++) {
 		p[i] = other[i];
@@ -43,14 +49,20 @@ BiArray::BiArray(const BiArray& other) :
 }
 
 // move constructor
-BiArray::BiArray(BiArray&& other) : size(other.size), p(other.p) {
+BiArray::BiArray(BiArray&& other) : size(other.size), p(other.p),
+		start(other.start), end(other.end), capacity(other.capacity) {
+	//other object set to valid but unspecified state
 	other.p = nullptr;
 	other.size = 0;
+	other.start= 0;
+	other.end = 0;
+	other.capacity = 0;
+	//other destroyed by compiler
 }
 
 // copy assignment
 BiArray& BiArray::operator=(const BiArray& other) {
-	if (this != &other) {
+	if (this != &other) {//compare addresses
 		if (size != other.size) {
 			delete [] p;
 			p = new int[other.size];
