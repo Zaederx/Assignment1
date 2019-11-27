@@ -192,10 +192,13 @@ string BiArray::printAll() const {
 }
 
 bool operator==(const BiArray& lhs, const BiArray& rhs) {
-	// IMPLEMENT ME
-	// below are just stub code
-	bool removeMe = false;
-	return removeMe;
+	char *str1 = lhs.print();
+	char *str2 = rhs.print();
+
+	if (strcmp(str1,str2) == 0){
+		return true;
+	}
+	return false;
 }
 
 bool operator!=(const BiArray& lhs, const BiArray& rhs) {
