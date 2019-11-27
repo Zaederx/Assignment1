@@ -4,8 +4,8 @@
 // default constructor
 BiArray::BiArray() {
  size = 0;
- start = (LO_THRESHOLD*size);//TODO FIRST element should be inserted into the middle
-capacity = INITIALCAP;
+ start = 2;//TODO FIRST element should be inserted into the middle
+capacity = INITIALCAP;// 5
 }
 
 // value constructor
@@ -106,20 +106,27 @@ void BiArray::push_back(int v) {
 	//insert new var v into array at tail
 	if (size == capacity ) {//If no space
 		int *temp = p;
-		p = new int[LO_THRESHOLD*size]; //increase size
-		delete [] temp;//deleting manually just in case
+		capacity = (LO_THRESHOLD*size);//new capacity
+		p = new int[capacity];
+		start = size;//because p is now 3*size so size is start point
+		int end = start+size;// where to stop inserting variables
+		for (int i=size; i < end; i++) {
+			p[i] = temp[i];/*copy entire oldP temp - which is a full array at this point
+			into the middle of the resized array */
+		}
+		p[end] = v;// add new variable to array
+		delete [] temp;
+	} else {
+	 size++;//increase BiArray size counter
+	 start = ((capacity - size)/2);//insertion start point
+	 int end = start + size;//position for new element - works because size was increased by one
+	 p[end] = v;
 	}
-	 int* temp= new int[capacity];
-	 size+=1;//increase BiArray size
-	 start = ((capacity - size)/2);
-	 int tail = start + size;
-	 p[tail] = v;
 
 }
 
 bool BiArray::pop_back() {
-	// IMPLEMENT ME
-	// below are just stub code
+
 	bool removeMe = false;
 	return removeMe;
 }
