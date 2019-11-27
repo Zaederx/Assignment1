@@ -107,18 +107,9 @@ void BiArray::push_back(int v) {
 	//i.e.insert old values into new array
 	//insert new var v into array at tail
 	if (size == capacity ) {//If no space
-		int *temp = p;
-		capacity = (LO_THRESHOLD*size);//new capacity
-		p = new int[capacity];
-		start = size;//because p is now 3*size so size is start point
-		int end = start+size;// where to stop inserting variables
-		for (int i=size; i < end; i++) {
-			p[i] = temp[i];/*copy entire oldP temp - which is a full array at this point
-			into the middle of the resized array */
-		}
+		reCapacity();
 		size++;//so size now increased
 		p[end] = v;// add new variable to array
-		delete [] temp;
 	} else {
 	 size++;//increase BiArray size counter
 	 int end = start + size;//position for new element - works because size was increased by one
@@ -128,10 +119,8 @@ void BiArray::push_back(int v) {
 }
 
 bool BiArray::pop_back() {
-
 	//if empty return false
 	if (size == 0) {return false;}
-
 	// For Removal - get last element position
 	p[end] = nullptr;//remove last element
 	end--;
@@ -141,24 +130,15 @@ bool BiArray::pop_back() {
 	// if not at mimimum capacity -
 	//but at maximum threshold(5* BIGGER) make it smaller
 	if (capacity >= (size*HI_THRESHOLD)) {
-		capacity = (size*LO_THRESHOLD);
+		reCapacity(); // decrease capacity
 	}
 	return true;
 }
 
 void BiArray::push_front(int v) {
-
 	//if front side is fill or capacity is filled
 	if (start == 0 || capacity == size) {
-		int* temp = p;
-	    capacity = (size * LO_THRESHOLD);
-		p = new int[capacity];
-		start = size; // = ((capacity-size)/2)
-		int end = start+size;
-		//fill new array with contexts of old
-		for (int i=(start); i < end; i++) {
-			p[i] = temp[i];
-		}
+		reCapacity();
 		//increase size and add new element to front
 		size++;//TODO IF THIS DOESNT WORK - INCREAAE SIZE AND REWORK START FORMULA BFORE FOR LOOP
 		start--; //because ((capacity-size)/2) = start--
@@ -172,8 +152,18 @@ void BiArray::push_front(int v) {
 
 bool BiArray::pop_front() {
 
-	bool removeMe = false;
-	return removeMe;
+	if (size == 0){return false;}
+	p[start] = nullptr;
+	//update array start(head) and size
+	start++;
+	size--;
+
+	if (capacity == INITIALCAP) {return true;}
+	if (capacity >= (size*HI_THRESHOLD)) {
+		reCapacity();//decrease capacity
+	}
+
+	return true;
 }
 
 int BiArray::getSize() const {
@@ -210,5 +200,20 @@ bool operator!=(const BiArray& lhs, const BiArray& rhs) {
 	// below are just stub code
 	bool removeMe = false;
 	return removeMe;
+}
+
+void BiArray::reCapacity() {
+	int *temp = p;
+	capacity = (LO_THRESHOLD*size);//new capacity
+	p = new int[capacity];
+	//because p is now 3*size so size is start point
+	start = size;
+	end = start+size;
+	/*copy entire oldP temp - which is a full array at this point
+	into the middle of the resized array */
+	for (int i=start; i < end; i++) {
+		p[i] = temp[i];
+	}
+	delete[] temp;
 }
 

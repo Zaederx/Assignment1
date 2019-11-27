@@ -103,6 +103,7 @@ private:
 	int capacity = new int();//how many elements can be stored without resizing
 	int start = new int();//*the starting point for insertion / head of array*/
 	int end = new int();// the end or tail of the array
+	void reCapacity();
 
 };
 
