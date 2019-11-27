@@ -211,6 +211,7 @@ bool operator!=(const BiArray& lhs, const BiArray& rhs) {
 	return true;
 }
 
+//renews the cacpcity to suit array size (number of elements
 void BiArray::reCapacity() {
 	int *temp = p;
 	capacity = (LO_THRESHOLD*size);//new capacity
