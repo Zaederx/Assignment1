@@ -98,10 +98,11 @@ public:
 
 private:
 	// TODO: add your private member data (and possibly functions)
-	int size = new int();//TODO probably shouldn't use 'new' on global constants - so there is no memory leak in main.cpp
-	int * p = nullptr;
-	int capacity = new int();
+	int size = new int();//size/number of array elements
+	int * p = nullptr;// the internal array - called p so I remember it's a pointer
+	int capacity = new int();//how many elements can be stored without resizing
 	int start = new int();//*the starting point for insertion / head of array*/
+	int end = new int();// the end or tail of the array
 
 };
 

@@ -5,6 +5,7 @@
 BiArray::BiArray() {
  size = 0;
  start = 2;//TODO FIRST element should be inserted into the middle
+ end = 2;// end = start + size
 capacity = INITIALCAP;// 5
 }
 
@@ -29,6 +30,7 @@ BiArray::~BiArray() {
 	delete size;
 	delete capacity;
 	delete start;
+	delete end;
 }
 
 // copy constructor
@@ -114,11 +116,11 @@ void BiArray::push_back(int v) {
 			p[i] = temp[i];/*copy entire oldP temp - which is a full array at this point
 			into the middle of the resized array */
 		}
+		size++;//so size now increased
 		p[end] = v;// add new variable to array
 		delete [] temp;
 	} else {
 	 size++;//increase BiArray size counter
-	 start = ((capacity - size)/2);//insertion start point
 	 int end = start + size;//position for new element - works because size was increased by one
 	 p[end] = v;
 	}
@@ -127,17 +129,49 @@ void BiArray::push_back(int v) {
 
 bool BiArray::pop_back() {
 
-	bool removeMe = false;
-	return removeMe;
+	//if empty return false
+	if (size == 0) {return false;}
+
+	// For Removal - get last element position
+	p[end] = nullptr;//remove last element
+	end--;
+	size--;//decrement array size
+	// if at minimum capacity - do not make smaller
+	if (capacity == INITIALCAP){return true;}
+	// if not at mimimum capacity -
+	//but at maximum threshold(5* BIGGER) make it smaller
+	if (capacity >= (size*HI_THRESHOLD)) {
+		capacity = (size*LO_THRESHOLD);
+	}
+	return true;
 }
 
 void BiArray::push_front(int v) {
-	// IMPLEMENT ME
+
+	//if front side is fill or capacity is filled
+	if (start == 0 || capacity == size) {
+		int* temp = p;
+	    capacity = (size * LO_THRESHOLD);
+		p = new int[capacity];
+		start = size; // = ((capacity-size)/2)
+		int end = start+size;
+		//fill new array with contexts of old
+		for (int i=(start); i < end; i++) {
+			p[i] = temp[i];
+		}
+		//increase size and add new element to front
+		size++;//TODO IF THIS DOESNT WORK - INCREAAE SIZE AND REWORK START FORMULA BFORE FOR LOOP
+		start--; //because ((capacity-size)/2) = start--
+		p[start] = v;
+	} else {
+	size++;
+	start--;
+	p[start] = v;
+	}
 }
 
 bool BiArray::pop_front() {
-	// IMPLEMENT ME
-	// below are just stub code
+
 	bool removeMe = false;
 	return removeMe;
 }
