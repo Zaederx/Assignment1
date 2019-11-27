@@ -12,10 +12,10 @@ capacity = INITIALCAP;// 5
 
 // value constructor
 BiArray::BiArray(int arr[], int size)  {
-	this->size = new int(size);
-	 start = new int(2);//TODO FIRST element should be inserted into the middle
-	 end = new int(2);// end = start + size
-	capacity = new int(INITIALCAP);// 5
+	this->size = size;
+	 start = 2;//TODO FIRST element should be inserted into the middle
+	 end = 2;// end = start + size
+	capacity = INITIALCAP;// 5
 	if ((LO_THRESHOLD * size) > INITIALCAP) {
 		capacity = (LO_THRESHOLD*size);//3*size
 	}
@@ -29,13 +29,6 @@ BiArray::BiArray(int arr[], int size)  {
 // destructor
 BiArray::~BiArray() {
 	delete [] p;
-	delete HI_THRESHOLD;
-	delete LO_THRESHOLD;
-	delete INITIALCAP;
-	delete size;
-	delete capacity;
-	delete start;
-	delete end;
 }
 
 // copy constructor
@@ -43,7 +36,7 @@ BiArray::BiArray(const BiArray& other) :
 	size(other.size), p(new int[other.capacity]), //new memory
 	start(other.start), end(other.end), capacity(other.capacity){
 	start = (capacity - size)/2;
-	for (int i = start; i , size; i++) {
+	for (int i = start; i <= end; i++) {
 		p[i] = other[i];
 	}
 }
@@ -86,7 +79,8 @@ BiArray& BiArray::operator=(BiArray&& other) {
 
 		int sTemp = size;
 		size = other.size;
-		other.size = pTemp;
+		other.size = sTemp;
+		//compiler cleans up other as they go out of scope
 	}
 
 	return *this;
@@ -109,7 +103,7 @@ int BiArray::operator[](int i) const {
 }
 
 int& BiArray::operator[](int i) {
-	return *p[i];
+	return p[i];
 }
 
 
@@ -134,7 +128,7 @@ bool BiArray::pop_back() {
 	//if empty return false
 	if (size == 0) {return false;}
 	// For Removal - get last element position
-	p[end] = nullptr;//remove last element
+	p[end] = -1;//remove last element
 	end--;
 	size--;//decrement array size
 	// if at minimum capacity - do not make smaller
@@ -165,7 +159,7 @@ void BiArray::push_front(int v) {
 bool BiArray::pop_front() {
 
 	if (size == 0){return false;}
-	p[start] = nullptr;
+	p[start] = -1;
 	//update array start(head) and size
 	start++;
 	size--;
@@ -204,8 +198,8 @@ string BiArray::printAll() const {
 }
 
 bool operator==(const BiArray& lhs, const BiArray& rhs) {
-	char *str1 = lhs.print();
-	char *str2 = rhs.print();
+	const char *str1 = lhs.print().c_str();
+	const char *str2 = rhs.print().c_str();
 
 	if (strcmp(str1,str2) == 0){
 		return true;
@@ -214,8 +208,8 @@ bool operator==(const BiArray& lhs, const BiArray& rhs) {
 }
 
 bool operator!=(const BiArray& lhs, const BiArray& rhs) {
-	char *str1 = lhs.print();
-	char *str2 = rhs.print();
+	const char *str1 = lhs.print().c_str();
+	const char *str2 = rhs.print().c_str();
 
 	if (strcmp(str1,str2) == 0){
 		return false;
