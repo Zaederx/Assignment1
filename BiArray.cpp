@@ -175,17 +175,20 @@ int BiArray::getCapacity() const {
 }
 
 string BiArray::print() const {
-	// IMPLEMENT ME
-	// below are just stub code
-	string removeMe = "";
-	return removeMe;
+	string pArray = "";
+	for (int i = start; i <= end; i++ ) {
+		pArray+= p[i];
+	}
+	return pArray;
 }
 
 string BiArray::printAll() const {
-	// IMPLEMENT ME
-	// below are just stub code
-	string removeMe = "";
-	return removeMe;
+	string pArray = "";
+	for (int i = 0; i < capacity; i++ ) {
+		pArray+= p[i];
+	}
+
+	return pArray;
 }
 
 bool operator==(const BiArray& lhs, const BiArray& rhs) {
