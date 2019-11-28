@@ -22,18 +22,17 @@ BiArray::BiArray(int arr[], int size)  {
 	start = ((capacity - this->size)/2);
 	end = (start+this->size - 1);
 	p = new int[capacity];
-	for (int i = start; i <= end; i++) {
-				p[i] = arr[i];
+	for (int i = 0; i <= size - 1; i++) {
+				p[start+i] = arr[i];
 			}
 	} else { //if size <= 0
 		capacity = INITIALCAP;//5
 		p = new int [capacity];
-		this->size = size;
+		this->size = 1;
 		start = 2; //same as ((capacity - size)/2); if size == 1
-		end = 3; // start - size - 1
-	for (int i = start; i <= end; i++) {
-			p[i] = arr[i];
-		}
+		end = 2; // start - size - 1
+		p[start] = arr[0];
+
 	}
 }
 
@@ -127,11 +126,11 @@ bool BiArray::set(int i, int v) {
 }
 
 int BiArray::operator[](int i) const {
-	return p[start+i+1];
+	return p[start+i];
 }
 
 int& BiArray::operator[](int i) {
-	return p[start+i+1];
+	return p[start+i];
 }
 
 
