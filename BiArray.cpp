@@ -5,26 +5,54 @@
 BiArray::BiArray() {
  p = new int [INITIALCAP];
  size = 0;
+ capacity = INITIALCAP;// 5
  start = 2;//TODO FIRST element should be inserted into the middle
- end = 2;// end = start + size
-capacity = INITIALCAP;// 5
+ end = 3;// end = start + size
+
 }
 
 // value constructor
+//TODO What if size == 0???
 BiArray::BiArray(int arr[], int size)  {
+	int check = LO_THRESHOLD*size;
+	if (check > INITIALCAP) { //if size >= 2
 	this->size = size;
-	 start = 2;//TODO FIRST element should be inserted into the middle
-	 end = 2;// end = start + size
-	capacity = INITIALCAP;// 5
-	if ((LO_THRESHOLD * size) > INITIALCAP) {
-		capacity = (LO_THRESHOLD*size);//3*size
-	}
-	p = new int[capacity];//initial capacity
-	start = ((capacity - size)/2);//to get it to be inserted into center
-	for (int i = start; i < size; i++) {
-		p[i] = arr[i];
+	//can't call reCapacity till initialised
+	capacity = (LO_THRESHOLD*this->size);
+	start = ((capacity - this->size)/2);
+	end = (start+this->size - 1);
+	p = new int[capacity];
+	for (int i = start; i <= end; i++) {
+				p[i] = arr[i];
+			}
+	} else { //if size <= 0
+		capacity = INITIALCAP;//5
+		p = new int [capacity];
+		this->size = size;
+		start = 2; //same as ((capacity - size)/2); if size == 1
+		end = 3; // start - size - 1
+	for (int i = start; i <= end; i++) {
+			p[i] = arr[i];
+		}
 	}
 }
+
+//renews the cacpcity to suit array size (number of elements
+void BiArray::reCapacity() {
+	int *temp = p;
+	capacity = (LO_THRESHOLD*size);//new capacity
+	p = new int[capacity];
+	//because p is now 3*size so size is start point
+	start = size;
+	end = start+size - 1;
+	/*copy entire oldP temp - which is a full array at this point
+	into the middle of the resized array */
+	for (int i=start; i <= end; i++) {
+		p[i] = temp[i];
+	}
+	delete[] temp;
+}
+
 
 // destructor
 BiArray::~BiArray() {
@@ -87,23 +115,23 @@ BiArray& BiArray::operator=(BiArray&& other) {
 }
 
 bool BiArray::get(int i, int& v) const {
-	if (i >= size) {return false;}
+	if (i >= size || i < 0) {return false;}
 	v = p[i];
 	return true;
 }
 
 bool BiArray::set(int i, int v) {
-	if (i >= size) {return false;}
+	if (i >= size || i < 0) {return false;}
 	p[i] = v;
 	return true;
 }
 
 int BiArray::operator[](int i) const {
-	return p[i];
+	return p[start+i+1];
 }
 
 int& BiArray::operator[](int i) {
-	return p[i];
+	return p[start+i+1];
 }
 
 
@@ -217,19 +245,4 @@ bool operator!=(const BiArray& lhs, const BiArray& rhs) {
 	return true;
 }
 
-//renews the cacpcity to suit array size (number of elements
-void BiArray::reCapacity() {
-	int *temp = p;
-	capacity = (LO_THRESHOLD*size);//new capacity
-	p = new int[capacity];
-	//because p is now 3*size so size is start point
-	start = size;
-	end = start+size;
-	/*copy entire oldP temp - which is a full array at this point
-	into the middle of the resized array */
-	for (int i=start; i < end; i++) {
-		p[i] = temp[i];
-	}
-	delete[] temp;
-}
 

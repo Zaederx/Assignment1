@@ -98,11 +98,11 @@ public:
 
 private:
 	// TODO: add your private member data (and possibly functions)
-	int size = 0;//size/number of array elements
-	int * p = nullptr;// the internal array - called p so I remember it's a pointer
-	int capacity = 0;//how many elements can be stored without resizing
-	int start = 0;//*the starting point for insertion / head of array*/
-	int end = 0;// the end or tail of the array
+	int size;//size/number of array elements
+	int capacity;//how many elements can be stored without resizing
+	int start;//*the starting point for insertion / head of array*/
+	int end;// the end or tail of the array
+	int * p;// the internal array - called p so I remember it's a pointer
 	void reCapacity();
 
 };
