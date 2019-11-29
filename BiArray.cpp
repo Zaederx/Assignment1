@@ -234,19 +234,34 @@ int BiArray::getCapacity() const {
 }
 
 string BiArray::print() const {
-	string pArray = "";
-	for (int i = start; i <= end; i++ ) {
-		pArray+= p[i];
+	if (size <= 0) {
+		return "[]";
 	}
+	string pArray = "[";
+	for (int i = start; i <= end; i++ ) {
+		if (i < end) {
+		pArray+= to_string(p[i])+" ";
+		} else {
+			pArray+= to_string(p[i]);
+		}
+	}
+	pArray+="]";
 	return pArray;
 }
 
 string BiArray::printAll() const {
-	string pArray = "";
+	if (size <= 0) {
+			return "[]";
+		}
+	string pArray = "[";
 	for (int i = 0; i < capacity; i++ ) {
-		pArray+= p[i];
+		if (1 != capacity) {
+		pArray+= to_string(p[i])+" ";
+		} else {
+			pArray+=to_string(p[i]);
+		}
 	}
-
+	pArray+="]";
 	return pArray;
 }
 
