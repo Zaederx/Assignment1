@@ -40,16 +40,20 @@ BiArray::BiArray(int arr[], int size)  {
 void BiArray::reCapacity() {
 	int *temp = p;
 	capacity = (LO_THRESHOLD*size);//new capacity
-	p = new int[capacity];
 	//because p is now 3*size so size is start point
+	int oldStart = start;
+	int oldEnd = end;
 	start = size;
 	end = start+size - 1;
+	p = new int[capacity];
 	/*copy entire oldP temp - which is a full array at this point
 	into the middle of the resized array */
-	for (int i=0; i <= size; i++) {
-		p[start+i] = temp[i];
+	int j = 0;
+	for (int i=oldStart; i <= oldEnd; i++) {
+		p[start+j] = temp[i];
+		j++;
 	}
-	delete[] temp;
+//	delete[] temp;
 }
 
 
@@ -168,10 +172,12 @@ void BiArray::push_back(int v) {
 	if (size == capacity ) {//If no space
 		reCapacity();
 		size++;//so size now increased
+//star altration??
+		end = start+size - 1;
 		p[end] = v;// add new variable to array
 	} else {
 	 size++;//increase BiArray size counter
-	 int end = start + size;//position for new element - works because size was increased by one
+	 end = start + size - 1;//position for new element - works because size was increased by one
 	 p[end] = v;
 	}
 
