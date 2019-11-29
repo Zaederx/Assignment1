@@ -38,12 +38,14 @@ BiArray::BiArray(int arr[], int size)  {
 
 //renews the cacpcity to suit array size (number of elements
 void BiArray::reCapacity() {
-	int *temp = p;
-	capacity = (LO_THRESHOLD*size);//new capacity
-	//because p is now 3*size so size is start point
+	int *temp = p;//because p is now 3*size so size is start point
 	int oldStart = start;
 	int oldEnd = start + size - 1;
-	start = size;
+	capacity = (LO_THRESHOLD*size);//new capacity
+	if (capacity < INITIALCAP) {
+		capacity = INITIALCAP;
+	}
+	start = ((capacity - size)/2);
 	end = start+size - 1;
 	p = new int[capacity];
 	/*copy entire oldP temp - which is a full array at this point

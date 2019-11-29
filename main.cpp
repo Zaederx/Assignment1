@@ -43,5 +43,6 @@ int main() {
 	cout << a.print() << endl;
 	cout << a.getSize() << endl;
 	cout << a.getCapacity() << endl;
+	cout << a.printAll()<<endl;
 
 }
