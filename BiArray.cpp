@@ -141,13 +141,13 @@ BiArray& BiArray::operator=(BiArray&& other) {
 
 bool BiArray::get(int i, int& v) const {
 	if (i >= size || i < 0) {return false;}
-	v = p[i];
+	v = p[start+i];
 	return true;
 }
 
 bool BiArray::set(int i, int v) {
 	if (i >= size || i < 0) {return false;}
-	p[i] = v;
+	p[start+i] = v;
 	return true;
 }
 
