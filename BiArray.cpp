@@ -42,7 +42,7 @@ void BiArray::reCapacity() {
 	capacity = (LO_THRESHOLD*size);//new capacity
 	//because p is now 3*size so size is start point
 	int oldStart = start;
-	int oldEnd = end;
+	int oldEnd = start + size - 1;
 	start = size;
 	end = start+size - 1;
 	p = new int[capacity];
@@ -53,7 +53,7 @@ void BiArray::reCapacity() {
 		p[start+j] = temp[i];
 		j++;
 	}
-//	delete[] temp;
+//	delete [] temp;
 }
 
 
@@ -169,7 +169,7 @@ void BiArray::push_back(int v) {
 	//do temp swap for new rray and old array values
 	//i.e.insert old values into new array
 	//insert new var v into array at tail
-	if (size == capacity ) {//If no space
+	if (end == capacity || capacity == size) {//If no space
 		reCapacity();
 		size++;//so size now increased
 //star altration??
