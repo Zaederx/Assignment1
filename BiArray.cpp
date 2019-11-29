@@ -6,18 +6,18 @@ BiArray::BiArray() {
  p = new int [INITIALCAP];
  size = 0;
  capacity = INITIALCAP;// 5
- start = 2;//TODO FIRST element should be inserted into the middle
- end = 3;// end = start + size
+ start = 2;
+ end = 2;
 
 }
 
 // value constructor
-//TODO What if size == 0???
 BiArray::BiArray(int arr[], int size)  {
+	//size check
 	int check = LO_THRESHOLD*size;
-	if (check > INITIALCAP) { //if size >= 2
+	if (check > INITIALCAP) {
 	this->size = size;
-	//can't call reCapacity till initialised
+	//can't call reCapacity() till initialised
 	capacity = (LO_THRESHOLD*this->size);
 	start = ((capacity - this->size)/2);
 	end = (start+this->size - 1);
@@ -25,37 +25,39 @@ BiArray::BiArray(int arr[], int size)  {
 	for (int i = 0; i <= size - 1; i++) {
 				p[start+i] = arr[i];
 			}
-	} else { //if size <= 0
-		capacity = INITIALCAP;//5
+	} else { //if size <= 1
+		capacity = INITIALCAP;
 		p = new int [capacity];
 		this->size = 1;
-		start = 2; //same as ((capacity - size)/2); if size == 1
+		start = 2; //same as ((capacity - size)/2) when size == 1
 		end = 2; // start - size - 1
 		p[start] = arr[0];
 
 	}
 }
 
-//renews the cacpcity to suit array size (number of elements
+/*renews the capacity to suit array size*/
 void BiArray::reCapacity() {
-	int *temp = p;//because p is now 3*size so size is start point
+	/*Copy current size variables*/
+	int *temp = p;
 	int oldStart = start;
 	int oldEnd = start + size - 1;
-	capacity = (LO_THRESHOLD*size);//new capacity
+
+	/*New capacity*/
+	capacity = (LO_THRESHOLD*size);
 	if (capacity < INITIALCAP) {
 		capacity = INITIALCAP;
 	}
-	start = ((capacity - size)/2);
+	start = size;
 	end = start+size - 1;
 	p = new int[capacity];
-	/*copy entire oldP temp - which is a full array at this point
-	into the middle of the resized array */
+
+	/*Copy into new array*/
 	int j = 0;
 	for (int i=oldStart; i <= oldEnd; i++) {
 		p[start+j] = temp[i];
 		j++;
 	}
-//	delete [] temp;
 }
 
 
@@ -91,7 +93,7 @@ BiArray& BiArray::operator=(const BiArray& other) {
 		if (capacity != other.capacity) {
 			delete [] p;
 			int * temp = p;
-			//Resize / Recapacity
+			//Resize / "Recapacity"
 			size = other.size;
 			start = other.start;
 			start = other.start;
@@ -101,10 +103,9 @@ BiArray& BiArray::operator=(const BiArray& other) {
 			p = new int[other.capacity];
 		}
 		// when they are the same size
-//		int start = (INITIALCAP - size)/2;
-			for (int i = other.start ; i <= other.end ; i++) {
-				p[i] = other.p[i];
-			}
+		for (int i = other.start ; i <= other.end ; i++) {
+			p[i] = other.p[i];
+		}
 	}
 
 
@@ -167,19 +168,15 @@ int& BiArray::operator[](int i) {
 
 
 void BiArray::push_back(int v) {
-	//new array
-	//do temp swap for new rray and old array values
-	//i.e.insert old values into new array
-	//insert new var v into array at tail
-	if (end == capacity || capacity == size) {//If no space
+	/*back is full or capacity full - resize*/
+	if (end == capacity || capacity == size) {
 		reCapacity();
-		size++;//so size now increased
-//star altration??
+		size++;
 		end = start+size - 1;
-		p[end] = v;// add new variable to array
+		p[end] = v;
 	} else {
-	 size++;//increase BiArray size counter
-	 end = start + size - 1;//position for new element - works because size was increased by one
+	 size++;
+	 end = start + size - 1;
 	 p[end] = v;
 	}
 
@@ -188,27 +185,25 @@ void BiArray::push_back(int v) {
 bool BiArray::pop_back() {
 	//if empty return false
 	if (size == 0) {return false;}
-	// For Removal - get last element position
-	p[end] = -1;//remove last element
+	p[end] = -1;
 	end--;
-	size--;//decrement array size
+	size--;
 	// if at minimum capacity - do not make smaller
 	if (capacity == INITIALCAP){return true;}
-	// if not at mimimum capacity -
-	//but at maximum threshold(5* BIGGER) make it smaller
+
+	//if too full - resize
 	if (capacity >= (size*HI_THRESHOLD)) {
-		reCapacity(); // decrease capacity
+		reCapacity();
 	}
 	return true;
 }
 
 void BiArray::push_front(int v) {
-	//if front side is fill or capacity is filled
+	//if front side is full or capacity is filled
 	if (start == 0 || capacity == size) {
 		reCapacity();
-		//increase size and add new element to front
-		size++;//TODO IF THIS DOESNT WORK - INCREAAE SIZE AND REWORK START FORMULA BFORE FOR LOOP
-		start--; //because ((capacity-size)/2) = start--
+		size++;
+		start--;
 		p[start] = v;
 	} else {
 	size++;
