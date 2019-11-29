@@ -46,8 +46,8 @@ void BiArray::reCapacity() {
 	end = start+size - 1;
 	/*copy entire oldP temp - which is a full array at this point
 	into the middle of the resized array */
-	for (int i=start; i <= end; i++) {
-		p[i] = temp[i];
+	for (int i=0; i <= size; i++) {
+		p[start+i] = temp[i];
 	}
 	delete[] temp;
 }
@@ -62,9 +62,8 @@ BiArray::~BiArray() {
 BiArray::BiArray(const BiArray& other) :
 	size(other.size), p(new int[other.capacity]), //new memory
 	start(other.start), end(other.end), capacity(other.capacity){
-	start = (capacity - size)/2;
-	for (int i = start; i <= end; i++) {
-		p[i] = other[i];
+	for (int i = 0; i < capacity; i++) {
+		p[i] = other.p[i];
 	}
 }
 
@@ -83,16 +82,25 @@ BiArray::BiArray(BiArray&& other) : size(other.size), p(other.p),
 // copy assignment
 BiArray& BiArray::operator=(const BiArray& other) {
 	if (this != &other) {//compare addresses
-		if (size != other.size) {
+		if (capacity != other.capacity) {
 			delete [] p;
-			p = new int[other.size];
+			int * temp = p;
+			//Resize / Recapacity
 			size = other.size;
+			start = other.start;
+			start = other.start;
+			end = other.end;
+			capacity = other.capacity;
+
+			p = new int[other.capacity];
 		}
+		// when they are the same size
+//		int start = (INITIALCAP - size)/2;
+			for (int i = other.start ; i <= other.end ; i++) {
+				p[i] = other.p[i];
+			}
 	}
-	int start = (INITIALCAP - size)/2;
-	for (int i = start; i < size ; i++) {
-		p[i] = other.p[i];
-	}
+
 
 	return *this;
 }
@@ -100,13 +108,31 @@ BiArray& BiArray::operator=(const BiArray& other) {
 // move assignment
 BiArray& BiArray::operator=(BiArray&& other) {
 	if(this != &other) {
+		//size
+		int sTemp = size;
+		size = other.size;
+		other.size = sTemp;
+
+		//start
+		int stTemp = start;
+		start = other.start;
+		other.start = stTemp;
+
+		//end
+		int eTemp = end;
+		end = other.end;
+		other.end = eTemp;
+
+		//capacity
+		int cTemp = capacity;
+		capacity = other.capacity;
+		other.capacity = cTemp;
+
+		//p - internal array
 		int* pTemp = p;
 		p = other.p;
 		other.p = pTemp;
 
-		int sTemp = size;
-		size = other.size;
-		other.size = sTemp;
 		//compiler cleans up other as they go out of scope
 	}
 
