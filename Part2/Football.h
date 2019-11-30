@@ -15,7 +15,19 @@ public:
 	// default 1 is assumed.
 	void addGoalsConceded(int g = 1);
 
+protected:
+	int getTotalScore();
+	void setTotalScore();
+	int getGoalsScored();
+	void setGoalsScored();
+	int getGoalsConceded();
+	void setGoalsConceded();
+
 	// TODO: add any private member variables
+private:
+	int totalScore;
+	int goalsScored;
+	int goalsConceded;
 
 };
 
@@ -26,7 +38,7 @@ public:
 	// Default constructor.
 	// This is only necessary to compile the empty version.
 	// If your implementation is correct this can be removed
-	Player();
+	Player() = delete;
 
 	// Value constructor, specifying the name of the player and
 	// the team the player belongs to. 
@@ -62,6 +74,11 @@ public:
 	string print() const;
 
 	// TODO: add any protected/private member variables you need
+protected:
+	string* name;
+	Team* team;
+	string role;
+	int score;
 };
 
 // Classes for each of the 4 roles
@@ -109,6 +126,8 @@ public:
 	void addShotsSaved(int ss = 1);
 
 	// TODO: you can add any private member variables
+private:
+	int shotsSaved;
 };
 
 // Class for a fantasy team
