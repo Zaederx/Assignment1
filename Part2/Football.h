@@ -15,17 +15,10 @@ public:
 	// default 1 is assumed.
 	void addGoalsConceded(int g = 1);
 
-protected:
-	int getTotalScore();
-	void setTotalScore();
-	int getGoalsScored();
-	void setGoalsScored();
-	int getGoalsConceded();
-	void setGoalsConceded();
 
 	// TODO: add any private member variables
 private:
-	int totalScore;
+	string name;
 	int goalsScored;
 	int goalsConceded;
 
@@ -48,21 +41,21 @@ public:
 	Player(const string& name, Team* t);
 
 	// Destructor
-	~Player();
+	 virtual ~Player();
 
 	// Increases the player's number of goals scored by g. 
 	// If g is omitted, 1 is assumed
-	void addGoalsScored(int g = 1);
+	virtual void addGoalsScored(int g = 1);
 
 	// Increases the player's number of assists by a. 
 	// If a is omitted, 1 is assumed
-	void addAssists(int a = 1);
+	void addAssists(int a = 1) final;
 
 	// Returns the score of this player, based on all the individual
 	// and team statistics. It is assumed that the caller knows what
 	// they are doing and have called the various add..() functions
 	// before calling this function.
-	int getScore() const;
+	virtual int getScore() const;
 
 	// Returns a string that includes the player's name, the position
 	// they play (goalkeeper/attacker etc.), the name of
@@ -71,14 +64,16 @@ public:
 	// points scored.
 	// Ideally you should print this exactly as described in the test cases
 	// but minor formatting differences will be tolerated
-	string print() const;
+	virtual string print() const;
 
 	// TODO: add any protected/private member variables you need
 protected:
-	string* name;
+	string& name;
 	Team* team;
 	string role;
 	int score;
+	int goals;
+	int assists;
 };
 
 // Classes for each of the 4 roles
@@ -152,11 +147,13 @@ public:
 	// (non-existent players contribute 0 to team score).
 	int getScore() const;
 
+	void tallyScore();
 private:
 	// Member variables: the 11 players
 	// You must not change this.
 	Player* players[11];
-
+	int teamSize;
+	int totalScore;
 	// TODO: You can add additional data members
 
 };

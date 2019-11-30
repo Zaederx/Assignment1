@@ -7,11 +7,13 @@
 // -------------- Team --------------------
 
 Team::Team(const string& name) {
-	// IMPLEMENT ME
+	this->name = name;
+	goalsScored = 0;
+	goalsConceded = 0;
 }
 
 void Team::addGoalsConceded(int g) {
-	// IMPLEMENT ME
+	goalsConceded+= g;
 }
 
 Team::~Team() {
@@ -21,41 +23,55 @@ Team::~Team() {
 // -------------- Player ------------------
 
 Player::Player() {
-	// see comment in .h
+	name = nullptr;
+	team = nullptr;
+	role = "unassigned";
+	score = 0;
+	goals = 0;
+	assists = 0;
+
 }
 
 Player::Player(const string& name, Team* t) {
-	// IMPLEMENT ME
+	this->name = name;
+	team = t;
+	score = 0;
+	goals = 0;
+	assists = 0;
 }
 
 // don't remove this even if you want to make the destructor pure virtual
 Player::~Player() {
-	// IMPLEMENT ME
+	delete name;
+	delete [] team;
 }
 
 void Player::addGoalsScored(int g) {
-	// IMPLEMENT ME
+	goals+=g;
 }
 
 void Player::addAssists(int a) {
-	// IMPLEMENT ME
+	assists += a;
 }
 
 int Player::getScore() const {
-	// IMPLEMENT ME
+	return score;
 }
 
 string Player::print() const {
-	// IMPLEMENT ME
-	// below are just stub code
-	string removeMe = "";
-	return removeMe;
+
+	string print = role+": "+ name+", Team: "+ team->name+"\n";
+	print+=	" Goals scored: "+ goals+"\n";
+	print+=	" Assists: "+ assists +"\n";
+	print+=	" Goals conceded: " + team->goalsConceded + "\n";
+	print+=	" Score: "+ score;
+	return print;
 }
 
 // -------------- Attacker ------------------
 
-Attacker::Attacker(const string& name, Team* t) {
-	// IMPLEMENT ME
+Attacker::Attacker(const string& name, Team* t) : Player(name, t) {
+	role = "Attacker";
 }
 
 Attacker::~Attacker() {
@@ -70,16 +86,13 @@ int Attacker::getScore() const {
 }
 
 string Attacker::print() const {
-	// IMPLEMENT ME
-	// below are just stub code
-	string removeMe = "";
-	return removeMe;
+	return Player::print();
 }
 
 // -------------- Midfielder ------------------
 
-Midfielder::Midfielder(const string& name, Team* t) {
-	// IMPLEMENT ME
+Midfielder::Midfielder(const string& name, Team* t) : Player(name, t) {
+	role = "Midfielder";
 }
 
 Midfielder::~Midfielder() {
@@ -94,16 +107,13 @@ int Midfielder::getScore() const {
 }
 
 string Midfielder::print() const {
-	// IMPLEMENT ME
-	// below are just stub code
-	string removeMe = "";
-	return removeMe;
+	return Player::print();
 }
 
 // -------------- Defender ------------------
 
-Defender::Defender(const string& name, Team* t) {
-	// IMPLEMENT ME
+Defender::Defender(const string& name, Team* t) : Player(name, t) {
+	role = "Defender";
 }
 
 Defender::~Defender() {
@@ -118,16 +128,14 @@ int Defender::getScore() const {
 }
 
 string Defender::print() const {
-	// IMPLEMENT ME
-	// below are just stub code
-	string removeMe = "";
-	return removeMe;
+	return Player::print();
 }
 
 // -------------- Goalkeeper ------------------
 
-Goalkeeper::Goalkeeper(const string& name, Team* t) {
-	// IMPLEMENT ME
+Goalkeeper::Goalkeeper(const string& name, Team* t) : Player(name, t) {
+ role = "Goalkeeper";
+ shotsSaved = 0;
 }
 
 Goalkeeper::~Goalkeeper() {
@@ -135,7 +143,7 @@ Goalkeeper::~Goalkeeper() {
 }
 
 void Goalkeeper::addShotsSaved(int ss) {
-	// IMPLEMENT ME
+	shotsSaved+=ss;
 }
 
 int Goalkeeper::getScore() const {
@@ -146,32 +154,47 @@ int Goalkeeper::getScore() const {
 }
 
 string Goalkeeper::print() const {
-	// IMPLEMENT ME
-	// below are just stub code
-	string removeMe = "";
-	return removeMe;
+	string print = role+": "+ name+", Team: "+ team->name+"\n";
+	print+=	" Goals scored: "+ goals+"\n";
+	print+=	" Assists: "+ assists +"\n";
+	print+=	" Goals conceded: " + team->goalsConceded + "\n";
+	print+=	" Shots saved: "+shotsSaved+"\n";
+	print+=	" Score: "+ score;
+	return print;
 }
 
 // -------------- FantasyTeam ------------------
 
 FantasyTeam::FantasyTeam() {
-	// IMPLEMENT ME
+	teamSize = 0;
+	totalScore = 0;
 }
 
+
 FantasyTeam::~FantasyTeam() {
-	// IMPLEMENT ME
+	delete [] players;
 }
 
 bool FantasyTeam::addPlayer(Player* p) {
-	// IMPLEMENT ME
-	// below are just stub code
-	bool removeMe = true;
-	return removeMe;
+	if (teamSize == 11) {return false;}
+	for (int i = 0 ; i < teamSize; i++){
+		if (players[i] == p){
+			return false;
+		}
+	}
+	players[teamSize] = p;
+	teamSize++;
+	return true;
 }
 
 int FantasyTeam::getScore() const {
-	// IMPLEMENT ME
-	// below are just stub code
-	int removeMe = 0;
-	return removeMe;
+	return totalScore;
 }
+
+void FantasyTeam::tallyScore() {
+	//loop through all team members and add their score to total score
+	for (Player p : players) {
+		totalScore += p.getScore();
+	}
+}
+
