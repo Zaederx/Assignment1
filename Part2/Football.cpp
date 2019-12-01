@@ -27,7 +27,7 @@ Player::Player() {
 	team = nullptr;
 	role = "unassigned";
 	score = 0;
-	goals = 0;
+	goalsScored = 0;
 	assists = 0;
 
 }
@@ -36,7 +36,7 @@ Player::Player(const string& name, Team* t) {
 	this->name = name;
 	team = t;
 	score = 0;
-	goals = 0;
+	goalsScored = 0;
 	assists = 0;
 }
 
@@ -47,11 +47,13 @@ Player::~Player() {
 }
 
 void Player::addGoalsScored(int g) {
-	goals+=g;
+	goalsScored+=g;
+	sumPoints();
 }
 
 void Player::addAssists(int a) {
 	assists += a;
+	sumPoints();
 }
 
 int Player::getScore() const {
@@ -61,7 +63,7 @@ int Player::getScore() const {
 string Player::print() const {
 
 	string print = role+": "+ name+", Team: "+ team->name+"\n";
-	print+=	" Goals scored: "+ goals+"\n";
+	print+=	" Goals scored: "+ goalsScored+"\n";
 	print+=	" Assists: "+ assists +"\n";
 	print+=	" Goals conceded: " + team->goalsConceded + "\n";
 	print+=	" Score: "+ score;
@@ -78,16 +80,20 @@ Attacker::~Attacker() {
 	// IMPLEMENT ME
 }
 
+void Attacker::sumPoints() {
+	int points = (assists * 3);
+	points+= (goalsScored*4);
+	score = points;
+}
+
 int Attacker::getScore() const {
-	// IMPLEMENT ME
-	// below are just stub code
-	int removeMe = 0;
-	return removeMe;
+	return score;
 }
 
 string Attacker::print() const {
 	return Player::print();
 }
+
 
 // -------------- Midfielder ------------------
 
@@ -99,11 +105,14 @@ Midfielder::~Midfielder() {
 	// IMPLEMENT ME
 }
 
+void Midfielder::sumPoints() {
+	int points = (assists * 3);
+	points+= (goalsScored*5);
+	score = points;
+}
+
 int Midfielder::getScore() const {
-	// IMPLEMENT ME
-	// below are just stub code
-	int removeMe = 0;
-	return removeMe;
+	return score;
 }
 
 string Midfielder::print() const {
@@ -118,6 +127,18 @@ Defender::Defender(const string& name, Team* t) : Player(name, t) {
 
 Defender::~Defender() {
 	// IMPLEMENT ME
+}
+
+void Defender::sumPoints() {
+	int points = (assists * 3);
+	points+= (goalsScored*6);
+
+	if (team->goalsConceded == 0) {
+		points+= 4;
+	} else {
+		points+= -(team->goalsConceded/2);
+	}
+	score = points;
 }
 
 int Defender::getScore() const {
@@ -144,18 +165,31 @@ Goalkeeper::~Goalkeeper() {
 
 void Goalkeeper::addShotsSaved(int ss) {
 	shotsSaved+=ss;
+	sumPoints();
 }
 
-int Goalkeeper::getScore() const {
-	// IMPLEMENT ME
-	// below are just stub code
-	int removeMe = 0;
-	return removeMe;
+//sum up points per respective category and value
+void Goalkeeper::sumPoints() {
+	int points = (shotsSaved/3);
+	points+= (assists * 3);
+	points+= (goalsScored*6);
+
+	if (team->goalsConceded == 0) {
+		points+= 4;
+	} else {
+		points+= -(team->goalsConceded/2);
+	}
+ score = points;
+
 }
+int Goalkeeper::getScore()  const  {
+	return score;
+}
+
 
 string Goalkeeper::print() const {
 	string print = role+": "+ name+", Team: "+ team->name+"\n";
-	print+=	" Goals scored: "+ goals+"\n";
+	print+=	" Goals scored: "+ goalsScored+"\n";
 	print+=	" Assists: "+ assists +"\n";
 	print+=	" Goals conceded: " + team->goalsConceded + "\n";
 	print+=	" Shots saved: "+shotsSaved+"\n";
@@ -193,8 +227,8 @@ int FantasyTeam::getScore() const {
 
 void FantasyTeam::tallyScore() {
 	//loop through all team members and add their score to total score
-	for (Player p : players) {
-		totalScore += p.getScore();
+	for (Player * p : players) {
+		totalScore += (*p).getScore();
 	}
 }
 

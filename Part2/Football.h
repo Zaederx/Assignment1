@@ -55,7 +55,7 @@ public:
 	// and team statistics. It is assumed that the caller knows what
 	// they are doing and have called the various add..() functions
 	// before calling this function.
-	virtual int getScore() const;
+	virtual int getScore() const = 0;
 
 	// Returns a string that includes the player's name, the position
 	// they play (goalkeeper/attacker etc.), the name of
@@ -72,8 +72,12 @@ protected:
 	Team* team;
 	string role;
 	int score;
-	int goals;
+	int goalsScored;
 	int assists;
+
+	//to sum up all individual points of players
+	//and sotre them in the score variable
+	virtual void sumPoints()=0;
 };
 
 // Classes for each of the 4 roles
@@ -83,8 +87,10 @@ class Attacker : public Player {
 public:
 	Attacker(const string& name, Team* t);
 	~Attacker();
+	void sumPoints();
 	int getScore() const;
 	string print() const;
+
 
 	// TODO: you can add any private member variables
 };
@@ -93,6 +99,7 @@ class Midfielder : public Player {
 public:
 	Midfielder(const string& name, Team* t);
 	~Midfielder();
+	void sumPoints();
 	int getScore() const;
 	string print() const;
 
@@ -103,6 +110,7 @@ class Defender : public Player {
 public:
 	Defender(const string& name, Team* t);
 	~Defender();
+	void sumPoints();
 	int getScore() const;
 	string print() const;
 
@@ -113,6 +121,7 @@ class Goalkeeper : public Player {
 public:
 	Goalkeeper(const string& name, Team* t);
 	~Goalkeeper();
+	void sumPoints();
 	int getScore() const;
 	string print() const;
 
