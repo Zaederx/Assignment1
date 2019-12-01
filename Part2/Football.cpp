@@ -93,6 +93,7 @@ string Attacker::print() const {
 
 Midfielder::Midfielder(const string& name, Team* t) : Player(name, t) {
 	role = "Midfielder";
+	score = 1;
 }
 
 Midfielder::~Midfielder() {
@@ -102,6 +103,9 @@ Midfielder::~Midfielder() {
 void Midfielder::sumPoints() {
 	int points = (assists * 3);
 	points+= (goalsScored*5);
+	if (team->goalsConceded == 0) {
+		points+=1;
+	}
 	score = points;
 }
 
