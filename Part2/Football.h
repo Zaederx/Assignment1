@@ -3,6 +3,11 @@ using namespace std;
 
 // Class for a real-life team
 class Team {
+friend class Player;
+friend class Attacker;
+friend class Midfielder;
+friend class Defender;
+friend class Goalkeeper;
 public:
 	// constructor. name is the name of the team.
 	// Also should initialise relevant team statistics to 0
@@ -16,11 +21,13 @@ public:
 	void addGoalsConceded(int g = 1);
 
 
+
 	// TODO: add any private member variables
 private:
 	string name;
 	int goalsScored;
 	int goalsConceded;
+
 
 };
 
@@ -49,7 +56,7 @@ public:
 
 	// Increases the player's number of assists by a. 
 	// If a is omitted, 1 is assumed
-	void addAssists(int a = 1) final;
+	void addAssists(int a = 1);
 
 	// Returns the score of this player, based on all the individual
 	// and team statistics. It is assumed that the caller knows what
@@ -68,7 +75,7 @@ public:
 
 	// TODO: add any protected/private member variables you need
 protected:
-	string& name;
+	string name;
 	Team* team;
 	string role;
 	int score;

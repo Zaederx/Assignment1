@@ -3,7 +3,8 @@
    some of the functions entirely
 */
 #include "Football.h"
-
+#include <string>
+using namespace std;
 // -------------- Team --------------------
 
 Team::Team(const string& name) {
@@ -22,15 +23,9 @@ Team::~Team() {
 
 // -------------- Player ------------------
 
-Player::Player() {
-	name = nullptr;
-	team = nullptr;
-	role = "unassigned";
-	score = 0;
-	goalsScored = 0;
-	assists = 0;
-
-}
+//Player::Player() {
+//
+//}
 
 Player::Player(const string& name, Team* t) {
 	this->name = name;
@@ -42,8 +37,7 @@ Player::Player(const string& name, Team* t) {
 
 // don't remove this even if you want to make the destructor pure virtual
 Player::~Player() {
-	delete name;
-	delete [] team;
+
 }
 
 void Player::addGoalsScored(int g) {
@@ -63,10 +57,10 @@ int Player::getScore() const {
 string Player::print() const {
 
 	string print = role+": "+ name+", Team: "+ team->name+"\n";
-	print+=	" Goals scored: "+ goalsScored+"\n";
-	print+=	" Assists: "+ assists +"\n";
-	print+=	" Goals conceded: " + team->goalsConceded + "\n";
-	print+=	" Score: "+ score;
+	print+=	" Goals scored: "+ to_string(goalsScored)+"\n";
+	print+=	" Assists: "+ to_string(assists) +"\n";
+	print+=	" Goals conceded: " + to_string(team->goalsConceded) + "\n";
+	print+=	" Score: "+to_string(score);
 	return print;
 }
 
@@ -189,11 +183,11 @@ int Goalkeeper::getScore()  const  {
 
 string Goalkeeper::print() const {
 	string print = role+": "+ name+", Team: "+ team->name+"\n";
-	print+=	" Goals scored: "+ goalsScored+"\n";
-	print+=	" Assists: "+ assists +"\n";
-	print+=	" Goals conceded: " + team->goalsConceded + "\n";
-	print+=	" Shots saved: "+shotsSaved+"\n";
-	print+=	" Score: "+ score;
+	print+=	" Goals scored: "+ to_string(goalsScored)+"\n";
+	print+=	" Assists: "+ to_string(assists)+"\n";
+	print+=	" Goals conceded: " + to_string(team->goalsConceded) + "\n";
+	print+=	" Shots saved: "+to_string(shotsSaved)+"\n";
+	print+=	" Score: "+ to_string(score);
 	return print;
 }
 
@@ -206,7 +200,7 @@ FantasyTeam::FantasyTeam() {
 
 
 FantasyTeam::~FantasyTeam() {
-	delete [] players;
+
 }
 
 bool FantasyTeam::addPlayer(Player* p) {
