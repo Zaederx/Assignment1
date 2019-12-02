@@ -254,10 +254,12 @@ int FantasyTeam::getScore() const {
 }
 
 void FantasyTeam::tallyScore() {
+	int temp = 0;
 	//loop through all team members and add their score to total score
 	for (int i =0; i < teamSize; i++) {
-//		(*players[i]).sumPoints();
-		totalScore += (*players[i]).getScore();
+		(*players[i]).sumPoints();
+		temp += (*players[i]).getScore();
 	}
+	totalScore = temp;
 }
 
