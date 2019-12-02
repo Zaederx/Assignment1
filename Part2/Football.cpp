@@ -109,6 +109,7 @@ string Attacker::print() const {
 Midfielder::Midfielder(const string& name, Team* t) : Player(name, t) {
 	role = "Midfielder";
 	score = 1;
+	t->addDefensivePlayer(this);
 }
 
 Midfielder::~Midfielder() {
