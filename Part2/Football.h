@@ -88,12 +88,12 @@ public:
 
 	virtual void sumPoints()=0;
 
-	virtual void setFantasyTeam(FantasyTeam * fTeam) final;
+//	virtual void setFantasyTeam(FantasyTeam * fTeam) final;
 	// TODO: add any protected/private member variables you need
 protected:
 	string name;
 	Team* team;
-	FantasyTeam* fantasyTeam;
+//	FantasyTeam* fantasyTeam;
 	string role;
 	int score;
 	int goalsScored;
