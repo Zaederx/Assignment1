@@ -21,12 +21,12 @@ void Team::addGoalsConceded(int g) {
 }
 
 Team::~Team() {
-	// IMPLEMENT ME
+
 }
 
 void Team::updatePlayers() {
 	for(int i =0 ; i < defenseNum ; i++) {
-		(*defense[i]).sumPoints();
+		defense[i]->sumPoints();
 	}
 }
 
@@ -136,6 +136,7 @@ string Midfielder::print() const {
 
 Defender::Defender(const string& name, Team* t) : Player(name, t) {
 	role = "Defender";
+	score = 4;
 	t->addDefensivePlayer(this);//TODO ADD DEFENDER
 }
 
@@ -168,6 +169,7 @@ string Defender::print() const {
 Goalkeeper::Goalkeeper(const string& name, Team* t) : Player(name, t) {
  role = "Goalkeeper";
  shotsSaved = 0;
+ score = 4;
  t->addDefensivePlayer(this);//TODO - ADD KEEPERS
 }
 
