@@ -1,5 +1,5 @@
 #include "BiArray.h"
-
+#include "string"
 
 // default constructor
 BiArray::BiArray() {
