@@ -138,7 +138,7 @@ string Midfielder::print() const {
 Defender::Defender(const string& name, Team* t) : Player(name, t) {
 	role = "Defender";
 	score = 4;
-	t->addDefensivePlayer(this);//TODO ADD DEFENDER
+	t->addDefensivePlayer(this);
 }
 
 Defender::~Defender() {
@@ -171,7 +171,7 @@ Goalkeeper::Goalkeeper(const string& name, Team* t) : Player(name, t) {
  role = "Goalkeeper";
  shotsSaved = 0;
  score = 4;
- t->addDefensivePlayer(this);//TODO - ADD KEEPERS
+ t->addDefensivePlayer(this);
 }
 
 Goalkeeper::~Goalkeeper() {
