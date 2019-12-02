@@ -33,7 +33,6 @@ private:
 	int goalsScored;
 	int goalsConceded;
 	Player * defense[11];
-	int defenseCapacity;
 	int defenseNum;
 
 	void updatePlayers();

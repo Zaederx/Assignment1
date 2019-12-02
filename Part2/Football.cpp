@@ -1,7 +1,3 @@
-/* Please note: even though it says IMPLEMENT ME, in some cases
-   the implementation can be empty. In fact, you may wish to remove
-   some of the functions entirely
-*/
 #include "Football.h"
 
 
@@ -12,7 +8,6 @@ Team::Team(const string& name) {
 	goalsScored = 0;
 	goalsConceded = 0;
 	defenseNum = 0;
-	defenseCapacity = 5;
 }
 
 void Team::addGoalsConceded(int g) {
@@ -21,12 +16,17 @@ void Team::addGoalsConceded(int g) {
 }
 
 Team::~Team() {
-
+//	for (int i = 0; i < defenseNum; i++) {
+//		defense[i] = nullptr;
+//	}
 }
 
 void Team::updatePlayers() {
-	for(int i =0 ; i < defenseNum ; i++) {
-		defense[i]->sumPoints();
+	if (defenseNum != 0) {
+		for(int i =0 ; i < defenseNum ; i++) {
+			defense[i]->sumPoints();
+		}
+	defense[0]->fantasyTeam->tallyScore();
 	}
 }
 
@@ -37,10 +37,6 @@ void Team::addDefensivePlayer(Player* p) {
 }
 
 // -------------- Player ------------------
-
-//Player::Player() {
-//
-//}
 
 Player::Player(const string& name, Team* t) {
 	this->name = name;
@@ -229,9 +225,9 @@ FantasyTeam::FantasyTeam() {
 
 
 FantasyTeam::~FantasyTeam() {
-	for (int i = 0; i < teamSize; i++) {
-		players[i] = nullptr;
-	}
+//	for (int i = 0; i < teamSize; i++) {
+//		players[i] = nullptr;
+//	}
 }
 
 bool FantasyTeam::addPlayer(Player* p) {
@@ -257,7 +253,6 @@ void FantasyTeam::tallyScore() {
 	int temp = 0;
 	//loop through all team members and add their score to total score
 	for (int i =0; i < teamSize; i++) {
-		(*players[i]).sumPoints();
 		temp += (*players[i]).getScore();
 	}
 	totalScore = temp;
