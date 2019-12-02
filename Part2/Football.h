@@ -2,6 +2,8 @@
 
 using namespace std;
 class Player;
+class FantasyTeam;
+
 #ifndef FOOTBALL_H
 #define FOOTBALL_H
 // Class for a real-life team
@@ -44,6 +46,7 @@ private:
 // Class for a footballer
 // You must turn this into an abstract class
 class Player {
+
 	friend class Team;
 public:
 	// Default constructor.
@@ -89,6 +92,7 @@ public:
 protected:
 	string name;
 	Team* team;
+	FantasyTeam* fantasyTeam;
 	string role;
 	int score;
 	int goalsScored;
