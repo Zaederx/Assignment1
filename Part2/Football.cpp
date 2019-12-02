@@ -3,22 +3,37 @@
    some of the functions entirely
 */
 #include "Football.h"
-#include <string>
-using namespace std;
+
+
 // -------------- Team --------------------
 
 Team::Team(const string& name) {
 	this->name = name;
 	goalsScored = 0;
 	goalsConceded = 0;
+	defenseNum = 0;
+	defenseCapacity = 5;
 }
 
 void Team::addGoalsConceded(int g) {
 	goalsConceded+= g;
+	updatePlayers();
 }
 
 Team::~Team() {
 	// IMPLEMENT ME
+}
+
+void Team::updatePlayers() {
+	for(int i =0 ; i < defenseNum ; i++) {
+		(*defense[i]).sumPoints();
+	}
+}
+
+void Team::addDefensivePlayer(Player* p) {
+	defense[defenseNum] = p;
+	defenseNum++;
+
 }
 
 // -------------- Player ------------------
@@ -121,6 +136,7 @@ string Midfielder::print() const {
 
 Defender::Defender(const string& name, Team* t) : Player(name, t) {
 	role = "Defender";
+	t->addDefensivePlayer(this);//TODO ADD DEFENDER
 }
 
 Defender::~Defender() {
@@ -140,10 +156,7 @@ void Defender::sumPoints() {
 }
 
 int Defender::getScore() const {
-	// IMPLEMENT ME
-	// below are just stub code
-	int removeMe = 0;
-	return removeMe;
+	return score;
 }
 
 string Defender::print() const {
@@ -155,6 +168,7 @@ string Defender::print() const {
 Goalkeeper::Goalkeeper(const string& name, Team* t) : Player(name, t) {
  role = "Goalkeeper";
  shotsSaved = 0;
+ t->addDefensivePlayer(this);//TODO - ADD KEEPERS
 }
 
 Goalkeeper::~Goalkeeper() {
@@ -226,6 +240,7 @@ int FantasyTeam::getScore() const {
 void FantasyTeam::tallyScore() {
 	//loop through all team members and add their score to total score
 	for (Player * p : players) {
+		(*p).sumPoints();
 		totalScore += (*p).getScore();
 	}
 }

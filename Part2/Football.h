@@ -1,8 +1,12 @@
 #include <string>
-using namespace std;
 
+using namespace std;
+class Player;
+#ifndef FOOTBALL_H
+#define FOOTBALL_H
 // Class for a real-life team
 class Team {
+
 friend class Player;
 friend class Attacker;
 friend class Midfielder;
@@ -21,19 +25,26 @@ public:
 	void addGoalsConceded(int g = 1);
 
 
-
 	// TODO: add any private member variables
 private:
 	string name;
 	int goalsScored;
 	int goalsConceded;
+	Player * defense[11];
+	int defenseCapacity;
+	int defenseNum;
 
-
+	void updatePlayers();
+	//for adding Keepers and Defenders to team
+	//so they can be updated when goals are conceded
+	void addDefensivePlayer(Player* p);
 };
+
 
 // Class for a footballer
 // You must turn this into an abstract class
 class Player {
+	friend class Team;
 public:
 	// Default constructor.
 	// This is only necessary to compile the empty version.
@@ -41,8 +52,8 @@ public:
 	Player() = delete;
 
 	// Value constructor, specifying the name of the player and
-	// the team the player belongs to. 
-	// The memory pointed to by t is externally managed and 
+	// the team the player belongs to.
+	// The memory pointed to by t is externally managed and
 	// not owned by this class
 	// Also should initialise relevant player statistics to 0
 	Player(const string& name, Team* t);
@@ -50,11 +61,11 @@ public:
 	// Destructor
 	 virtual ~Player();
 
-	// Increases the player's number of goals scored by g. 
+	// Increases the player's number of goals scored by g.
 	// If g is omitted, 1 is assumed
 	virtual void addGoalsScored(int g = 1);
 
-	// Increases the player's number of assists by a. 
+	// Increases the player's number of assists by a.
 	// If a is omitted, 1 is assumed
 	void addAssists(int a = 1);
 
@@ -73,6 +84,7 @@ public:
 	// but minor formatting differences will be tolerated
 	virtual string print() const;
 
+	virtual void sumPoints()=0;
 	// TODO: add any protected/private member variables you need
 protected:
 	string name;
@@ -84,19 +96,22 @@ protected:
 
 	//to sum up all individual points of players
 	//and sotre them in the score variable
-	virtual void sumPoints()=0;
+
+
 };
 
 // Classes for each of the 4 roles
 // Most functions are explained in the Player class above
 
 class Attacker : public Player {
+	friend class Team;
 public:
 	Attacker(const string& name, Team* t);
 	~Attacker();
 	void sumPoints();
 	int getScore() const;
 	string print() const;
+
 
 
 	// TODO: you can add any private member variables
@@ -173,3 +188,4 @@ private:
 	// TODO: You can add additional data members
 
 };
+#endif/*FOOTBALL_H*/
