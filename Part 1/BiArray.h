@@ -96,7 +96,7 @@ public:
 	friend bool operator==(const BiArray& lhs, const BiArray& rhs);
 	friend bool operator!=(const BiArray& lhs, const BiArray& rhs);
 
-private:
+//private:
 	// TODO: add your private member data (and possibly functions)
 	int size;//size/number of array elements
 	int capacity;//how many elements can be stored without resizing

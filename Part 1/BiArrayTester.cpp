@@ -311,7 +311,7 @@ void BiArrayTester::testOperatorEqual() {
 
 	b.set(5,6);
 	if (a==b) errorOut_("Unequal BiArrays reported as equal",4);
-
+	std::cout << to_string(a.size) << "  " << to_string(b.size);
 	BiArray c;
 	BiArray d;
 	for(int i=0;i<10;i++) c.push_back(i);
