@@ -88,6 +88,8 @@ public:
 	virtual string print() const;
 
 	virtual void sumPoints()=0;
+
+	virtual void setFantasyTeam(FantasyTeam * fTeam) final;
 	// TODO: add any protected/private member variables you need
 protected:
 	string name;

@@ -58,13 +58,15 @@ Player::~Player() {
 
 void Player::addGoalsScored(int g) {
 	goalsScored+=g;
-	sumPoints();
+	sumPoints();//FIXME REMOVE IF FOUND UNECESSARY
+	fantasyTeam->tallyScore();
 
 }
 
 void Player::addAssists(int a) {
 	assists += a;
-	sumPoints();
+	sumPoints();//FIXME REMOVE IF FOUND UNECESSARY
+	fantasyTeam->tallyScore();
 }
 
 int Player::getScore() const {
@@ -79,6 +81,10 @@ string Player::print() const {
 	print+=	" Goals conceded: " + to_string(team->goalsConceded) + "\n";
 	print+=	" Score: "+to_string(score);
 	return print;
+}
+
+void Player::setFantasyTeam (FantasyTeam * fanTeam) {
+	fantasyTeam = fanTeam;
 }
 
 // -------------- Attacker ------------------
@@ -223,7 +229,9 @@ FantasyTeam::FantasyTeam() {
 
 
 FantasyTeam::~FantasyTeam() {
-
+	for (int i = 0; i < teamSize; i++) {
+		players[i] = nullptr;
+	}
 }
 
 bool FantasyTeam::addPlayer(Player* p) {
@@ -233,7 +241,9 @@ bool FantasyTeam::addPlayer(Player* p) {
 			return false;
 		}
 	}
+
 	players[teamSize] = p;
+	(players[teamSize])->setFantasyTeam(this);
 	teamSize++;
 	tallyScore();
 	return true;
@@ -245,8 +255,8 @@ int FantasyTeam::getScore() const {
 
 void FantasyTeam::tallyScore() {
 	//loop through all team members and add their score to total score
-	for (int i =0; i < teamSize - 1; i++) {
-		(*players[i]).sumPoints();
+	for (int i =0; i < teamSize; i++) {
+//		(*players[i]).sumPoints();
 		totalScore += (*players[i]).getScore();
 	}
 }

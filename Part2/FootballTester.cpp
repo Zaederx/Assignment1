@@ -473,7 +473,7 @@ void FootballTester::testFantasyTeamGetScore() {
 	p5->addGoalsScored();
 	p6->addGoalsScored(2);
 	if (myteam.getScore() != 27) errorOut_("FantasyTeam getscore incorrect",1);
-	delete t1; 
+	delete t1;
 	delete p1; delete p2; delete p3; delete p4; delete p5; delete p6;
 
 	passOut_("Tested the FantasyTeam getScore");
